@@ -1,0 +1,126 @@
+@charset "utf-8";
+
+.msr_h103 {
+  background: #1B73BA;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px 0px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px 0px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px 0px;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 30px;
+  margin: 0 0 20px;
+  padding: 5px 20px 5px 25px;
+  position: relative;
+  width: 100%;
+}
+
+/* h1白の三角形 */
+.msr_h103:before {
+  border-bottom: 10px solid transparent;
+  border-left: 10px solid #FFF;
+  border-right: 10px solid transparent;
+  border-top: 10px solid transparent;
+  content: " ";
+  display: block;
+  left: 0;
+  margin: -10px 0 0 0;
+  position: absolute;
+  top: 50%;
+}
+.msr_h203 {
+  background: #F8F8F8;
+  border-top: 2px solid #1B73BA;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px 0px;
+  -moz-box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px 0px;
+  -webkit-box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px 0px;
+  box-sizing: border-box;
+  color: #1B73BA;
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0 0 20px;
+  padding: 10px 15px 10px;
+}
+.msr_h303 {
+  border-bottom: 2px solid #1B73BA;
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 20px;
+  padding-bottom: 5px;
+}
+.msr_h403 {
+  border-left: 2px solid #1B73BA;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 0 20px;
+  padding-left: 5px;
+}
+
+.msr_btn11 button{
+  width: 230px;
+  padding:10px;
+  color:#ffffff;
+  font-size: 18px;
+  font-family: sans-serif;
+  line-height: 120%;
+  text-align: center;
+  text-decoration: none;
+  background: #1B73BA;
+  border: 2px solid #1B73BA;
+  -webkit-box-shadow:0px 0px 0px 1px #ffffff inset;
+  -moz-box-shadow:0px 0px 0px 1px #ffffff inset;
+  box-shadow:0px 0px 0px 1px #ffffff inset;
+  display: block;
+  position:relative;
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+}
+.msr_btn11 button:hover{
+  color:#ffffff;
+  background: #67a8dd;
+}
+.msr_btn11 button:active{
+  color:#1B73BA;
+  background: #ffffff;
+  transition: 0s ease-out;
+}
+
+/*こっから適当に追加*/
+div.main-content{
+  font-family: sans-serif;
+  background: #F8F8F8;
+  padding: 10px;
+  margin: 20px 200px 200px 200px;
+  min-width: 720px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 2px 0px;
+}
+.counterSpace{
+  margin: 5px;
+  font-size: 130%;
+}
+.buttonSpace button{
+  width:50px;
+  font-size: 1em;
+  margin-left: 5px;
+  margin-right: 5px;
+  color: #fff;
+  background: #1B73BA;
+  border: 2px solid #1B73BA;
+  -webkit-box-shadow:0px 0px 0px 1px #ffffff inset;
+  -moz-box-shadow:0px 0px 0px 1px #ffffff inset;
+  box-shadow:0px 0px 0px 1px #ffffff inset;
+  -webkit-transition: 0.3s ease-out;
+  -moz-transition: 0.3s ease-out;
+  -o-transition: 0.3s ease-out;
+  transition: 0.3s ease-out;
+}
+.buttonSpace button:hover{
+  color:#ffffff;
+  background: #67a8dd;
+}
+.buttonSpace button:active{
+  color:#1B73BA;
+  background: #ffffff;
+  transition: 0s ease-out;
+}
