@@ -124,3 +124,33 @@ div.main-content{
   background: #ffffff;
   transition: 0s ease-out;
 }
+
+input[type=number]{
+  width: 3em;
+}
+
+.tool_section{
+  margin-top: 3em;
+}
+
+.result_table{
+  border: 2px solid #ddd;
+}
+.sep_vs{
+  color: #c00;
+}
+.bt_vs{
+  color: #0c0;
+}
+.bt_coop{
+  color: #00c;
+}
+.bt_br{
+  color: #c00;
+}
+.bt_sp_vs{
+  color: #0c6;
+}
+.bt_sp_br{
+  color: #c06;
+}
