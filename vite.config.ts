@@ -6,5 +6,6 @@ export default defineConfig({
   server: {
     open: true
   },
-  plugins: [react()]
+  plugins: [react()],
+  base: "/ticketTool/",
 })

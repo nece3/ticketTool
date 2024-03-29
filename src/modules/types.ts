@@ -1,5 +1,11 @@
 import { PCData, Character, secTypes } from "./secrets"
-import { battleType, battleTypeKey } from "./vs_variation";
+import { ticketType, vs_variation } from "./vs_variation";
+
+export type battleTypeKey = keyof typeof vs_variation;
+export type battleType = (typeof vs_variation)[battleTypeKey];
+
+export type ticketTypeKey = keyof typeof ticketType;
+export type ticketType = typeof ticketType[ticketTypeKey]
 
 export type range = {
   min: number;
@@ -45,9 +51,13 @@ export type vsFilterType = {
   [k in battleTypeKey]: boolean;
 };
 
+export type ticketFilterType = {
+  [k in ticketTypeKey]: boolean;
+}
+
 export type result = {
   npcs: PCData[];
-  ticket_type: number;
+  ticket_type: ticketTypeKey;
   groups: battleGroup[];
   battle_type: battleType;
   proportion: groups_proportion;

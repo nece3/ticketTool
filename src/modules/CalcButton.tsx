@@ -1,6 +1,7 @@
 import { calcArg, calcButtonProp, reportArg, result, distribution } from "./types"
-import { combinedGen } from "./util"
+import { combinedGen, getEntries } from "./util"
 import { dist_init, distribution_suits, get_proportion, getGroups, getPCDataGen } from "./character"
+import { ticketType } from "./vs_variation";
 
 export const CalcButton = (prop: { data: calcButtonProp })=>{
   const { pcList, npcList, memberRecord, setTime,
@@ -40,9 +41,9 @@ async function calc_battle_conditions(
   let reported = start_time;
   for (const npcs of gen) {
     const members = [...pcList, ...npcs];
-    const ticket_types = [1, 2];
-    for (const ticket_type of ticket_types) {
-      const groups = getGroups(members, ticket_type);
+    const ticket_types = getEntries(ticketType)
+    for (const [ticket_type, ticket_settings] of ticket_types) {
+      const groups = getGroups(members, ticket_settings.pairs);
       const proportion = get_proportion(
         groups.map((g) => g.members),
         members

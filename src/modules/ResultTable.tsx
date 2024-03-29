@@ -1,7 +1,7 @@
 import { get_secret_text, PCData, secrets } from "./secrets";
-import { battleGroup, groups_proportion, result } from "./types";
+import { battleGroup, groups_proportion, result, battleType } from "./types";
 import { addSep, DLTextButton, sum } from "./util";
-import { battleType } from "./vs_variation";
+import { ticketType } from "./vs_variation";
 
 const BattleTypeElement = (prop: { type: battleType }) => {
   return <span className={prop.type.className}>{prop.type.name}</span>;
@@ -105,7 +105,7 @@ export const ResultTable = (prop: { data: result[] }) => {
             <td className="result_table">
               <PCDataElements data={r.npcs} />
             </td>
-            <td className="result_table">{r.ticket_type}</td>
+            <td className="result_table">{ticketType[r.ticket_type].name}</td>
             <td className="result_table">
               <GroupsElement groups={r.groups} proportion={r.proportion} />
             </td>

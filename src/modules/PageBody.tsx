@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Character, PCData, secrets } from "./secrets";
-import { vs_variation } from "./vs_variation";
+import { ticketType, vs_variation } from "./vs_variation";
 import {
   distribution,
   NPCData,
@@ -8,14 +8,10 @@ import {
   result,
   secCheck,
   vsFilterType,
+  ticketFilterType,
 } from "./types";
 import { NPCInput } from "./NPCInput";
-import {
-  getEntries,
-  updateNth,
-  sum,
-  keyMap,
-} from "./util";
+import { getEntries, updateNth, sum, keyMap } from "./util";
 import { dist_init, getCharacterRecord, getCharacters } from "./character";
 import { NominationArea } from "./NominationArea";
 import { CalcButton } from "./CalcButton";
@@ -50,6 +46,9 @@ const SecretTool = () => {
   const [vsFilter, setVsFilter] = useState<vsFilterType>(
     keyMap<typeof vs_variation, boolean>(vs_variation, (_, v) => v.valid)
   );
+  const [ticketFilter, setTicketFilter] = useState<ticketFilterType>(
+    keyMap(ticketType, () => true)
+  );
   const members = getCharacters({ pArray: pcList, nArray: npcList });
   const memberRecord = useMemo(
     () => getCharacterRecord({ characters: members }),
@@ -60,9 +59,10 @@ const SecretTool = () => {
       results.filter(
         (r) =>
           vsFilter[r.battle_type.id] &&
+          ticketFilter[r.ticket_type] &&
           r.npcs.every((n, i) => i >= npcList.length || dataMet(n, npcList[i]))
       ),
-    [results, npcList, vsFilter]
+    [results, npcList, vsFilter, ticketFilter]
   );
   useEffect(() => {
     if (!loadFinished) {
@@ -139,8 +139,11 @@ const SecretTool = () => {
       </div>
       <div>
         分類:
-        <br />
         <VsFilterChecks data={vsFilter} setFilter={setVsFilter} />
+      </div>
+      <div>
+        ペア上限:
+        <TicketFilterChecks data={ticketFilter} setFilter={setTicketFilter} />
       </div>
       <div>
         <CalcButton
@@ -166,6 +169,28 @@ const SecretTool = () => {
         </>
       ) : null}
     </div>
+  );
+};
+
+const TicketFilterChecks = (prop: {
+  data: ticketFilterType;
+  setFilter: (arg: ticketFilterType) => void;
+}) => {
+  return (
+    <span>
+      {getEntries(ticketType).map(([k, v]) => (
+        <span key={k}>
+          {v.name}
+          <input
+            type="checkbox"
+            checked={prop.data[k]}
+            onChange={(e) =>
+              prop.setFilter({ ...prop.data, [k]: e.target.checked })
+            }
+          />{" "}
+        </span>
+      ))}
+    </span>
   );
 };
 

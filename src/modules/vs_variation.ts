@@ -57,5 +57,7 @@ export const vs_variation = {
   },
 } as const;
 
-export type battleTypeKey = keyof typeof vs_variation;
-export type battleType = (typeof vs_variation)[battleTypeKey];
+export const ticketType = {
+  one: { name:"1", pairs: 1 },
+  two: { name:"2", pairs: 2 }
+} as const;

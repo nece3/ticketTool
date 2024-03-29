@@ -1,9 +1,13 @@
-import { Character, PCData, secrets, secTypes } from "./secrets";
+import { Character, PCData, secrets } from "./secrets";
 import { battleGroup, CharacterCheck, groups_proportion, memberRecord, NPCData } from "./types";
 import { combinedGen, getEntries, getRange, keyMap, make_k_pair_to_n, nCr_count, sum, unique_and_less_filter } from "./util";
 import { vs_variation } from "./vs_variation";
 
 export const dist_init = () => keyMap(vs_variation, (_) => 0);
+
+export const init = <K extends string,V>(temp: { [k in K]: unknown }, initial: V) : { [k in K]: V }=>{
+  return keyMap<{ [k in K]: unknown },V>(temp, (_)=>initial)
+}
 
 export const filteredMembers = (
   me: Character,
