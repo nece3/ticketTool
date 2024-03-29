@@ -184,7 +184,7 @@ export const secrets = {
     name: "F両",
     index: "候補(F)",
     detail:
-      "両想いの2人組を可能な限り作る。\n[両想いがいなければ]→想い人とペアになる。",
+      "\n[この中に両想いがいる]→両想いの2人組を可能な限り作る。\n[いない]→想い人とペアになる。",
     admit: (arg: admitArgs) => {
       //以下のようなキャラクターを抽出
       const both = arg.members.filter((m1, i1) =>
@@ -204,7 +204,7 @@ export const secrets = {
       }
       //ペアになった両想いの数が、両想いの数またはペアの数と等しい
       const coupled = both.filter((c) => pairedWithLove(arg.pairs, c));
-      return coupled.length === Math.max(both.length, arg.pairs.length);
+      return coupled.length === Math.min(both.length, arg.pairs.length);
     },
     statement: `
 あなたは「(※1)」に思いを寄せている。
