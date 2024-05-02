@@ -38,7 +38,7 @@ export const NPCInput = (prop: {
   const setStrength = (strength: number) =>
     prop.modifyNPC({ myCharacter: { ...prop.myData.myCharacter, strength } });
   const setTarget = (target: CharacterCheck) => prop.modifyNPC({ target });
-  const setTargetCheck = (chk: { [k: string]: boolean }) => setTarget(chk);
+  const setTargetCheck = (chk: { [k: string]: boolean }) => setTarget({ ...prop.myData.target, ...chk });
   const modifySelect = (id: secTypes, check: Partial<secCheck>) =>
     prop.modifyNPC({
       secret: {

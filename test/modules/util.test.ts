@@ -1,4 +1,4 @@
-import { make_pair, make_k_pair_to_n, nCr_count } from '../../src/modules/PCForm'
+import { make_pair, make_k_pair_to_n, nCr_count } from '../../src/modules/util'
 
 describe("nCr_count", ()=>{
   test("6C2は15である", () => {
