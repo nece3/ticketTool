@@ -61,7 +61,7 @@ export const secrets = {
       //いずれかのペアが、自分と、自分の想い人を含む
       return pairedWithLove(arg.pairs, arg.me);
     },
-    statement: `
+    statement: (_:PCData)=>`
 あなたは「(※1)」に思いを寄せている。
 
 あなたはこの機会を利用し、(※1)との距離を縮めたいと思っている。
@@ -84,7 +84,7 @@ export const secrets = {
       if (!like) return false;
       return pairedWithLove(arg.pairs, like);
     },
-    statement: `
+    statement: (_:PCData)=>`
 あなたは「(※1)」に思いを寄せている。
 
 しかし、あなたの好きな人にもまた、想い人がいるようだ。
@@ -114,7 +114,7 @@ export const secrets = {
         })
       );
     },
-    statement: `
+    statement: (_:PCData)=>`
 あなたは「(※1)」に思いを寄せている。
 
 しかし、あなたは今の全員の関係を心地よく思っており、
@@ -141,7 +141,7 @@ export const secrets = {
       if (!they) return false;
       return pairedWithLove(arg.pairs, they);
     },
-    statement: `
+    statement: (_:PCData)=>`
 あなたは「(※1)」に思いを寄せている。
 
 しかし、あなたは「(※2)」のことを無二の親友だと思っており、
@@ -163,7 +163,7 @@ export const secrets = {
         (pair) => pair.includes(arg.me.myCharacter) && pair.length === 1
       );
     },
-    statement: `
+    statement: (_:PCData)=>`
 あなたは「あなた」に思いを寄せている。
 そう、あろうことか、あなたはあなた自身
 (あるいは、あなた自身の中にいる何か)に恋をしてしまったのだ。
@@ -206,7 +206,7 @@ export const secrets = {
       const coupled = both.filter((c) => pairedWithLove(arg.pairs, c));
       return coupled.length === Math.min(both.length, arg.pairs.length);
     },
-    statement: `
+    statement: (_:PCData)=>`
 あなたは「(※1)」に思いを寄せている。
 
 しかし、あなたは思いが通じ合うことの難しさを知っている。
@@ -234,7 +234,7 @@ export const secrets = {
         (pair) => pair.includes(arg.me.myCharacter) && pair.length === 1
       );
     },
-    statement: `
+    statement: (_:PCData)=>`
 あなたは「(※1)」に思いを寄せている。
 
 しかし、あなたは極度のヘタレでもある。
@@ -272,12 +272,14 @@ export const secrets = {
       //それ以外なら、想い人とペアになることが使命
       return pairedWithLove(arg.pairs, arg.me);
     },
-    statement: `
+    statement: (p:PCData)=>{
+      const pre_st = `
 あなたは「(※1)」に思いを寄せている。
 
 しかし、あなたには気になっていることがある。「(※2)」のことだ。
 …ひょっとして(※2)は、あなたのことが好きなのでは？
-
+`;
+      const mid_st_diff = `
 あなたと(※1)が両想いならその恋は諦めてもらうほかないが、
 そうでない場合、(※2)の想いを受け入れるのもやぶさかではない。
 それくらいには、あなたも(※2)のことを気に入っている。
@@ -285,11 +287,26 @@ export const secrets = {
 あなたの【本当の使命】は「(※1)とペアになる」ことだが、
 (※1)の想い人があなたでなく、(※2)の想い人があなたならば、
 あなたの【本当の使命】は「(※2)とペアになる」ことに変更される。
+`;
+      const mid_st_same = `
+もしそうであれば、(※2)の想いを受け入れるのもやぶさかではない。
+それくらいには、あなたも(※2)のことを気に入っている。
 
+あなたの【本当の使命】は「(※2)とペアになる」ことだが、
+(※2)の想い人があなたならば、
+あなたの【本当の使命】は変更…されず、「(※2)とペアになる」ことである。
+`;
+      const post_st = `
 なお、もしも『(※2)の想い人があなたでない』ことを、
 (ロールプレイや【秘密】によって)初めてあなたが知った時、
 あなたは変調表を1回振り、その変調を受ける。
-`,
+`;
+      if(p.target === p.secret.extra[0]){
+        return pre_st + mid_st_same + post_st;
+      }else{
+        return pre_st + mid_st_diff + post_st;
+      }
+    },
   },
 } as const;
 export const get_secret_text = (data: PCData) => {
@@ -297,7 +314,7 @@ export const get_secret_text = (data: PCData) => {
     secret_prefix(data.myCharacter.name) +
     data.secret.extra.reduce(
       (s, c, i) => s.replaceAll(`(※${i + 2})`, c.name),
-      secrets[data.secret.key].statement.replaceAll("(※1)", data.target.name)
+      secrets[data.secret.key].statement(data).replaceAll("(※1)", data.target.name)
     )
   );
 };
