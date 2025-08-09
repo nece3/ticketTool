@@ -61,7 +61,7 @@ export const secrets = {
       //いずれかのペアが、自分と、自分の想い人を含む
       return pairedWithLove(arg.pairs, arg.me);
     },
-    statement: (_: PCData) => `
+    statement: (_?: PCData) => `
 あなたは「(※1)」に思いを寄せている。
 
 あなたには、確かに取り戻したいものがある。
@@ -88,7 +88,7 @@ export const secrets = {
       if (!like) return false;
       return pairedWithLove(arg.pairs, like);
     },
-    statement: (_: PCData) => `
+    statement: (_?: PCData) => `
 あなたは「(※1)」に思いを寄せている。
 
 でも、あなたは気づいてしまった。
@@ -122,7 +122,7 @@ export const secrets = {
         })
       );
     },
-    statement: (_: PCData) => `
+    statement: (_?: PCData) => `
 あなたは「(※1)」に思いを寄せている。
 
 けれど、あなたには壊したくないものがある。
@@ -152,7 +152,7 @@ export const secrets = {
       if (!they) return false;
       return pairedWithLove(arg.pairs, they);
     },
-    statement: (_: PCData) => `
+    statement: (_?: PCData) => `
 あなたは「(※1)」に思いを寄せている。
 
 でも、あなたには譲れないものがある。
@@ -184,7 +184,7 @@ export const secrets = {
       // そうでなければ、自分が想い人とペアとなることが使命
       return pairedWithLove(arg.pairs, me)
     },
-    statement: (_: PCData) => `
+    statement: (_?: PCData) => `
 あなたは「(※1)」に思いを寄せている。
 
 ただ、あなたは「報われぬ恋」について、思うところがある。
@@ -226,7 +226,7 @@ export const secrets = {
       const coupled = both.filter((c) => pairedWithLove(arg.pairs, c));
       return coupled.length === Math.min(both.length, arg.pairs.length);
     },
-    statement: (_: PCData) => `
+    statement: (_?: PCData) => `
 あなたは「(※1)」に思いを寄せている。
 
 けれど、あなたは知っている。
@@ -254,7 +254,7 @@ export const secrets = {
         (pair) => pair.includes(arg.me.myCharacter) && pair.length === 1
       );
     },
-    statement: (_: PCData) => `
+    statement: (_?: PCData) => `
 あなたは「(※1)」に思いを寄せている。
 
 しかし、あなたには自信がない。
@@ -295,7 +295,7 @@ export const secrets = {
       //それ以外なら、想い人とペアになることが使命
       return pairedWithLove(arg.pairs, arg.me);
     },
-    statement: (p: PCData) => {
+    statement: (p?: PCData) => {
       const pre_st = `
 あなたは「(※1)」に思いを寄せている。
 
@@ -319,7 +319,7 @@ export const secrets = {
 (※2)の想い人があなたならば、
 あなたの【本当の使命】は変更…されず、やはり「(※2)とペアになる」ことである。
 `;
-      if (p.target === p.secret.extra[0]) {
+      if (p && p.target === p.secret.extra[0]) {
         return pre_st + mid_st_same;
       } else {
         return pre_st + mid_st_diff;

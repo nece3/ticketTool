@@ -10,7 +10,8 @@ const get_secret_nomination = (
     secret_prefix(name) +
     [
       secret_nomination_prefix,
-      ...nominations.map((t) => "\n" + secrets[t].index + secrets[t].statement),
+      ...nominations.map((t) => "\n" + secrets[t].index + secrets[t].statement()),
+      "",
     ].join(secret_nomination_sep)
   );
 };
