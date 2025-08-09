@@ -17,6 +17,7 @@ import { NominationArea } from "./NominationArea";
 import { CalcButton } from "./CalcButton";
 import { ResultTable } from "./ResultTable";
 import { ArrayCounter, PCForm, validatedPC } from "./PCForm";
+import { defaultPCList } from "./defaultData";
 
 const Abstruct = () => (
   <div className="tool_section">
@@ -37,7 +38,7 @@ export const PageBody = () => {
   );
 };
 const SecretTool = () => {
-  const [pcList, setPCList] = useState<PCData[]>([]);
+  const [pcList, setPCList] = useState<PCData[]>(defaultPCList);
   const [loadFinished, setLoadFinished] = useState(false);
   const [npcList, setNPCList] = useState<NPCData[]>([]);
   const [time, setTime] = useState<number>(0);
@@ -124,6 +125,7 @@ const SecretTool = () => {
           delete={() => {
             refresh({ npcListArg: npcList.slice(0, npcList.length - 1) });
           }}
+          decl_allowed={members.length>2}
         />
         {npcList.map((c, i) => (
           <NPCInput

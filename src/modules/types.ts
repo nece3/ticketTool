@@ -21,6 +21,7 @@ export type groups_proportion = {
 };
 
 export type ArrayCounterProp<T> = {
+  readonly decl_allowed: boolean;
   readonly array: readonly T[];
   readonly add: () => void;
   readonly delete: () => void;

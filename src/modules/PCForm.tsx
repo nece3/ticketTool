@@ -7,7 +7,7 @@ export const ArrayCounter = <T,>(prop: ArrayCounterProp<T>) => {
   return (
     <div>
       <span className="buttonSpace">
-        <button onClick={prop.delete}>-</button>
+        <button onClick={prop.delete} disabled={!prop.decl_allowed}>-</button>
       </span>
       <span>{prop.array.length}</span>
       <span className="buttonSpace">
@@ -27,7 +27,7 @@ export const PCForm = (prop: PCFormProp) => {
   };
   return (
     <>
-      <ArrayCounter<PCData> array={dataList} add={add} delete={remove} />
+      <ArrayCounter<PCData> array={dataList} add={add} delete={remove} decl_allowed={prop.members.length>2} />
       <table>
         <tbody>
           {dataList.map((p, i) => (
