@@ -2,12 +2,7 @@
 export type secTypes = keyof typeof secrets;
 
 export type SecSelect = Readonly<
-  {
-    [key in secTypes]: Readonly<{
-      key: key;
-      extra: Character[];
-    }>;
-  }[secTypes]
+  { key: secTypes, extra: Character[] }
 >;
 
 export type admitArgs = {

@@ -18,6 +18,8 @@ import { CalcButton } from "./CalcButton";
 import { ResultTable } from "./ResultTable";
 import { ArrayCounter, PCForm, validatedPC } from "./PCForm";
 import { defaultPCList } from "./defaultData";
+import { ZodType } from "zod";
+import { npcDataArraySchema, pcDataArraySchema } from "./zodSchema";
 
 const Abstruct = () => (
   <div className="tool_section">
@@ -37,6 +39,15 @@ export const PageBody = () => {
     </>
   );
 };
+
+const loadStrage = <T,>(key: string, schema: ZodType<T>)=>{
+  const loaded = localStorage.getItem(key);
+  if(!loaded) return undefined;
+  const parsed = schema.safeParse(JSON.parse(loaded))
+  if(!parsed.success) return undefined;
+  return parsed.data;
+}
+
 const SecretTool = () => {
   const [pcList, setPCList] = useState<PCData[]>(defaultPCList);
   const [loadFinished, setLoadFinished] = useState(false);
@@ -67,15 +78,8 @@ const SecretTool = () => {
   );
   useEffect(() => {
     if (!loadFinished) {
-      const loadedPcList = localStorage.getItem("pcList");
-      const loadedNpcList = localStorage.getItem("npcList");
-      //XXX 自分しか使わんはずのlocalStrage内容をパースするの糞めんどいから許して
-      const pcListArg = loadedPcList
-        ? (JSON.parse(loadedPcList) as PCData[])
-        : undefined;
-      const npcListArg = loadedNpcList
-        ? (JSON.parse(loadedNpcList) as NPCData[])
-        : undefined;
+      const pcListArg = loadStrage<PCData[]>("pcList", pcDataArraySchema)
+      const npcListArg = loadStrage<NPCData[]>("npcList", npcDataArraySchema)
       refresh({ pcListArg, npcListArg });
       setLoadFinished(true);
     }
@@ -258,13 +262,12 @@ const ResultCounter = (prop: {
   count: number;
   all: number;
 }) => {
+  const in_calc = sum(Object.values(prop.distributions))
   return (
     <div>
       <span>
-        該当{prop.count}件 / 計算済み{sum(Object.values(prop.distributions))}件
-        / 全{prop.all}件
+        該当{prop.count}件 (計算{in_calc === prop.all ? "完了" : "中"} {in_calc} / {prop.all}件, {prop.time}ms)
       </span>
-      <span>({prop.time}ms)</span>
     </div>
   );
 };
