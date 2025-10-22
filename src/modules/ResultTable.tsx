@@ -26,6 +26,7 @@ const PCDataElement = (prop: { data: PCData }) => {
 const GroupsElement = (prop: {
   groups: battleGroup[];
   proportion: groups_proportion;
+  show_pair: boolean;
 }) => {
   return (
     <span>
@@ -40,12 +41,13 @@ const GroupsElement = (prop: {
                   .map((pair) => `(${pair.map((c) => c.name).join(",")})`)
                   .join(" + ")
               : "なし";
+          const pair_title = `[ペア内容: ${pair_comment}]`
           const str_short =
             prop.proportion.str.max -
             sum(group.members.map((d) => d.myCharacter.strength));
           return (
             <span>
-              <span title={`【ペア内容: ${pair_comment}】`}>
+              <span title={prop.show_pair ? undefined : pair_title}>
                 {group.members.map((c) => c.myCharacter.name).join(",")}
               </span>
               {str_short > 0 ? (
@@ -55,10 +57,13 @@ const GroupsElement = (prop: {
                   【+{str_short}】
                 </span>
               ) : null}
+              { prop.show_pair ? <span>
+                {" " + pair_title}
+              </span> : null }
             </span>
           );
         }),
-        <span className="sep_vs"> vs </span>
+        <span className="sep_vs"> vs {prop.show_pair ? <br/> : null }</span>
       )}
     </span>
   );
@@ -86,7 +91,7 @@ export const DLSecretButton = (prop: { data: PCData }) => {
 };
 
 
-export const ResultTable = (prop: { data: result[] }) => {
+export const ResultTable = (prop: { data: result[], show_pair: boolean }) => {
   return (
     <table>
       <thead>
@@ -107,7 +112,7 @@ export const ResultTable = (prop: { data: result[] }) => {
             </td>
             <td className="result_table">{ticketType[r.ticket_type].name}</td>
             <td className="result_table">
-              <GroupsElement groups={r.groups} proportion={r.proportion} />
+              <GroupsElement groups={r.groups} proportion={r.proportion} show_pair={prop.show_pair} />
             </td>
             <td className="result_table">
               <BattleTypeElement type={r.battle_type} />

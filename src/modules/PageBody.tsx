@@ -61,6 +61,7 @@ const SecretTool = () => {
   const [ticketFilter, setTicketFilter] = useState<ticketFilterType>(
     keyMap(ticketType, () => true)
   );
+  const [show_pair, setShow_pair] = useState(false)
   const members = getCharacters({ pArray: pcList, nArray: npcList });
   const memberRecord = useMemo(
     () => getCharacterRecord({ characters: members }),
@@ -152,6 +153,10 @@ const SecretTool = () => {
         <TicketFilterChecks data={ticketFilter} setFilter={setTicketFilter} />
       </div>
       <div>
+        目的ペアをテキストで表示:
+        <input type="checkbox" checked={show_pair} onChange={(e)=>setShow_pair(e.target.checked)}/>
+      </div>
+      <div>
         <CalcButton
           data={{
             pcList,
@@ -171,7 +176,7 @@ const SecretTool = () => {
             count={filtered_results.length}
             all={count_condition(npcList, members, 2)}
           />
-          <ResultTable data={filtered_results} />
+          <ResultTable data={filtered_results} show_pair={show_pair} />
         </>
       ) : null}
     </div>
